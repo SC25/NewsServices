@@ -22,17 +22,17 @@ public class NewsApiClient {
 		categoryMap = new HashMap<>();
 		categoryMap.put("general", new String[]{"associated-press", "the-huffington-post"});
 		categoryMap.put("business", new String[]{"the-wall-street-journal", "bloomberg"});
-		categoryMap.put("sports", new String[]{"espn", "fox-sports"});
+		categoryMap.put("sport", new String[]{"espn", "fox-sports"});
 		categoryMap.put("politics", new String[]{"breitbart-news"});
 		categoryMap.put("entertainment", new String[]{"buzzfeed", "entertainment-weekly"});
 		categoryMap.put("technology", new String[]{"engadget", "hacker-news"});
 	}
-	public List<Response> getNews(String category) throws JsonParseException, JsonMappingException, IOException {
+	public List<NewsApiResponse> getNews(String category) throws JsonParseException, JsonMappingException, IOException {
 		ObjectMapper mapper = new ObjectMapper();
-		List<Response> responseList = new ArrayList<>();
+		List<NewsApiResponse> responseList = new ArrayList<>();
 		for(String source: categoryMap.get(category)) {
 			URL url = new URL("https://newsapi.org/v1/articles?source="+ source +"&apikey=7b39613ec06c444a908c4ca833923a3b");
-			responseList.add(mapper.readValue(url, Response.class));
+			responseList.add(mapper.readValue(url, NewsApiResponse.class));
 		}
 		return responseList;
 	}
